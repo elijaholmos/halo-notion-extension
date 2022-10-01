@@ -1,0 +1,17 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"timezone": "America/Phoenix",
+	"extends": [
+		":ignoreModulesAndTests",
+		":autodetectPinVersions",
+		":prConcurrentLimit10",
+		"group:recommended",
+		"workarounds:all",
+		":semanticCommitType(chore)"
+	],
+	"automerge": true,
+	"automergeType": "pr",
+	"automergeStrategy": "squash",
+	"platformAutomerge": true,
+	"lockFileMaintenance": { "enabled": true, "automerge": true }
+}
