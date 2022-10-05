@@ -34,7 +34,6 @@
 		"tailwindcss": "3.1.8"
 	},
 	"dependencies": {
-		"@notionhq/client": "2.2.1",
 		"entities": "4.4.0",
 		"luxon": "3.0.4"
 	}
