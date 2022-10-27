@@ -16,7 +16,7 @@
 		"@rollup/plugin-node-resolve": "15.0.1",
 		"@rollup/plugin-replace": "5.0.1",
 		"@types/chrome": "0.0.200",
-		"autoprefixer": "10.4.12",
+		"autoprefixer": "10.4.13",
 		"colorette": "2.0.19",
 		"daisyui": "2.33.0",
 		"fflate": "0.7.4",
