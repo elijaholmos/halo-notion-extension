@@ -18,7 +18,7 @@
 		"@types/chrome": "0.0.200",
 		"autoprefixer": "10.4.13",
 		"colorette": "2.0.19",
-		"daisyui": "2.38.1",
+		"daisyui": "2.39.0",
 		"fflate": "0.7.4",
 		"filesize": "10.0.5",
 		"postcss": "8.4.18",
