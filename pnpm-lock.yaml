@@ -9,7 +9,7 @@ specifiers:
   daisyui: 2.43.1
   entities: 4.4.0
   fflate: 0.7.4
-  filesize: 10.0.5
+  filesize: 10.0.6
   luxon: 3.1.1
   postcss: 8.4.20
   rollup: 2.79.1
@@ -35,7 +35,7 @@ devDependencies:
   colorette: 2.0.19
   daisyui: 2.43.1_r4gnkvssmvyxmi2wmat5xbx36a
   fflate: 0.7.4
-  filesize: 10.0.5
+  filesize: 10.0.6
   postcss: 8.4.20
   rollup: 2.79.1
   rollup-plugin-chrome-extension: 3.6.10
@@ -1082,9 +1082,9 @@ packages:
     resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}
     dev: true
 
-  /filesize/10.0.5:
-    resolution: {integrity: sha512-qrzyt8gLh86nsyYiC3ibI5KyIYRCWg2yqIklYrWF4a0qNfekik4OQfn7AoPJG2hRrPMSlH6fET4VEITweZAzjA==}
-    engines: {node: '>= 14.0.0'}
+  /filesize/10.0.6:
+    resolution: {integrity: sha512-rzpOZ4C9vMFDqOa6dNpog92CoLYjD79dnjLk2TYDDtImRIyLTOzqojCb05Opd1WuiWjs+fshhCgTd8cl7y5t+g==}
+    engines: {node: '>= 10.4.0'}
     dev: true
 
   /fill-range/7.0.1:
