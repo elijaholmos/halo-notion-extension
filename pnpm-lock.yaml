@@ -10,7 +10,7 @@ specifiers:
   entities: 4.4.0
   fflate: 0.7.4
   filesize: 10.0.6
-  luxon: 3.1.1
+  luxon: 3.2.0
   postcss: 8.4.20
   rollup: 2.79.1
   rollup-plugin-chrome-extension: 3.6.10
@@ -25,7 +25,7 @@ specifiers:
 
 dependencies:
   entities: 4.4.0
-  luxon: 3.1.1
+  luxon: 3.2.0
 
 devDependencies:
   '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
@@ -1405,8 +1405,8 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
 
-  /luxon/3.1.1:
-    resolution: {integrity: sha512-Ah6DloGmvseB/pX1cAmjbFvyU/pKuwQMQqz7d0yvuDlVYLTs2WeDHQMpC8tGjm1da+BriHROW/OEIT/KfYg6xw==}
+  /luxon/3.2.0:
+    resolution: {integrity: sha512-Namj3XqoJjFekq/JHQEaaAv4zyE/fyyDBrMEBnIL2s/X54SC8W5Ea0uej1TRXUArWec8OojsAVsGBYhNRjpMVw==}
     engines: {node: '>=12'}
     dev: false
 
