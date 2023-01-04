@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Elijah Olmos
+ * Copyright (C) 2023 Elijah Olmos
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -33,7 +33,7 @@ const chrome = defineConfig({
 	output: {
 		dir: 'build/chrome',
 		format: 'esm',
-		sourcemap: production,
+		sourcemap: !production,
 	},
 	plugins: [
 		emptyDir(),
@@ -47,7 +47,7 @@ const chrome = defineConfig({
 				dev: !production,
 			},
 			preprocess: sveltePreprocess({
-				sourceMap: production,
+				sourceMap: !production,
 			}),
 		}),
 		postcss(),
