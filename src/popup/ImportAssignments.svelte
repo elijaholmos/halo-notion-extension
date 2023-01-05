@@ -13,7 +13,6 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <script>
 	import { stores } from '../stores';
 	import { getHaloCookies, getUserId, getUserOverview } from '../util/halo';
@@ -44,7 +43,7 @@
 
 		console.log('retrieved classes', classes);
 
-		for (const { slugId } of classes.courseClasses) {
+		for (const { slugId } of classes.courseClasses.filter(({ stage }) => stage !== 'POST')) {
 			let val = 0; //tracking current assignment no. for progressbar
 			const { current_class, totalpoints, max } = await prepClassAssignmentImport({ slugId, cookie });
 			for (const unit of current_class.units) {
@@ -70,7 +69,8 @@
 		const uid = await getUserId({ cookie });
 		const class_res = await getUserOverview({ uid, cookie });
 		console.log(class_res);
-		for (const { courseCode } of class_res.classes.courseClasses) classes.push(courseCode);
+		for (const { courseCode } of class_res.classes.courseClasses.filter(({ stage }) => stage !== 'POST'))
+			classes.push(courseCode);
 	};
 </script>
 
