@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@rollup/plugin-node-resolve': 15.0.1
   '@rollup/plugin-replace': 5.0.2
-  '@types/chrome': 0.0.210
+  '@types/chrome': 0.0.211
   autoprefixer: 10.4.13
   colorette: 2.0.19
   daisyui: 2.46.0
@@ -30,7 +30,7 @@ dependencies:
 devDependencies:
   '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
   '@rollup/plugin-replace': 5.0.2_rollup@2.79.1
-  '@types/chrome': 0.0.210
+  '@types/chrome': 0.0.211
   autoprefixer: 10.4.13_postcss@8.4.21
   colorette: 2.0.19
   daisyui: 2.46.0_gbtt6ss3tbiz4yjtvdr6fbrj44
@@ -190,8 +190,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /@types/chrome/0.0.210:
-    resolution: {integrity: sha512-VSjQu1k6a/rAfuqR1Gi/oxHZj4+t6+LG+GobNI3ZWI6DQ+fmphNSF6TrLHG6BYK2bXc9Gb4c1uXFKRRVLaGl5Q==}
+  /@types/chrome/0.0.211:
+    resolution: {integrity: sha512-Ps5gqXg50M9YddHgnvFGKHNb9KZdP/e2zerZ/pn/tDet0O9hZ4oZCSXUfPdRW9Xl8XaGjujvyORkTwuvlARXQQ==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.10
