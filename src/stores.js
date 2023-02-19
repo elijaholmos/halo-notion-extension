@@ -58,9 +58,7 @@ class ApplicationStoreManager {
 		} catch (e) {
 			console.log('reconstruct error', e);
 			//wait 1 second and try again
-			console.log('waiting 1 sec');
 			await new Promise((resolve) => setTimeout(resolve, 1000));
-			console.log('done waiting 1 sec');
 			return this.reconstruct();
 		}
 		return this;
