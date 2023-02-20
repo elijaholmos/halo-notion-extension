@@ -1,6 +1,6 @@
 {
 	"name": "halo-notion-extension",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Import assignments from Halo into Notion",
 	"author": "Elijah Olmos",
 	"license": "AGPL-3.0-only",

@@ -20,7 +20,7 @@
 	import Error from './components/Error.svelte';
 	import ProgressBar from './components/ProgressBar.svelte';
 	import LazyLoader from './LazyLoader.svelte';
-	const { halo_cookies } = stores;
+	const { halo_cookies, selected_classes } = stores;
 
 	// ----- state -----
 	let error;
@@ -43,7 +43,9 @@
 
 		console.log('retrieved classes', classes);
 
-		for (const { slugId } of classes.courseClasses.filter(({ stage }) => stage !== 'POST')) {
+		for (const { slugId } of classes.courseClasses.filter(
+			({ courseCode }) => $selected_classes?.[courseCode] === true
+		)) {
 			let val = 0; //tracking current assignment no. for progressbar
 			const { current_class, totalpoints, max } = await prepClassAssignmentImport({ slugId, cookie });
 			for (const unit of current_class.units) {
@@ -79,12 +81,17 @@
 		<Error {error} />
 	{:else}
 		<div class="text-center mt-3">
-			<h1 class="text-lg">Active Classes</h1>
-			{#each classes as code}
-				<div class="badge badge-primary badge-md m-1">{code}</div>
-			{:else}
-				<div class="badge badge-error badge-md">No active classes</div>
-			{/each}
+			<h1 class="text-lg font-semibold">Select Classes to Import</h1>
+			<div class="form-control">
+				{#each Object.keys($selected_classes) as code}
+					<label class="label cursor-pointer justify-around pb-0">
+						<div class="badge badge-primary badge-md m-1">{code}</div>
+						<input type="checkbox" class="toggle toggle-primary" bind:checked={$selected_classes[code]} />
+					</label>
+				{:else}
+					<div class="badge badge-error badge-md">No active classes</div>
+				{/each}
+			</div>
 		</div>
 
 		<br />

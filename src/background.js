@@ -17,7 +17,7 @@
 import { init, stores } from './stores';
 import { triggerNotionAuthFlow } from './util/auth';
 import chromeStorageSyncStore from './util/chromeStorageSyncStore';
-import { getHaloCookies, getHaloUserInfo } from './util/halo';
+import { getHaloCookies, getHaloUserInfo, getUserId, getUserOverview } from './util/halo';
 // no stores - code is not shared between background and popup
 
 const VERSION = chrome.runtime.getManifest().version;
@@ -32,6 +32,18 @@ const COOKIE_KEY = 'halo_cookies';
 		chromeStorageSyncStore({ key: 'notion_info' }),
 		chromeStorageSyncStore({ key: COOKIE_KEY, initial_value: initial_cookies }),
 		chromeStorageSyncStore({ key: 'halo_info', initial_value: () => getHaloUserInfo({ cookie: initial_cookies }) }),
+		chromeStorageSyncStore({
+			key: 'selected_classes',
+			initial_value: async () =>
+				(
+					await getUserOverview({
+						uid: await getUserId({ cookie: initial_cookies }),
+						cookie: initial_cookies,
+					})
+				)?.classes?.courseClasses
+					?.filter(({ stage }) => stage !== 'POST')
+					?.reduce((acc, { courseCode }) => ({ ...acc, [courseCode]: true }), {}),
+		}),
 	]);
 	console.log('ApplicationStoreManager initialized');
 	console.log(stores);
