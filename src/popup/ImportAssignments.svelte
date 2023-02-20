@@ -43,7 +43,9 @@
 
 		console.log('retrieved classes', classes);
 
-		for (const { slugId } of classes.courseClasses.filter(({ stage }) => stage !== 'POST')) {
+		for (const { slugId } of classes.courseClasses.filter(
+			({ courseCode }) => $selected_classes?.[courseCode] === true
+		)) {
 			let val = 0; //tracking current assignment no. for progressbar
 			const { current_class, totalpoints, max } = await prepClassAssignmentImport({ slugId, cookie });
 			for (const unit of current_class.units) {
@@ -81,8 +83,8 @@
 		<div class="text-center mt-3">
 			<h1 class="text-lg font-semibold">Select Classes to Import</h1>
 			<div class="form-control">
-				{#each classes as code}
-					<label class="label cursor-pointer justify-around">
+				{#each Object.keys($selected_classes) as code}
+					<label class="label cursor-pointer justify-around pb-0">
 						<div class="badge badge-primary badge-md m-1">{code}</div>
 						<input type="checkbox" class="toggle toggle-primary" bind:checked={$selected_classes[code]} />
 					</label>
