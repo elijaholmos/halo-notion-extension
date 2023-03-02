@@ -17,7 +17,7 @@ specifiers:
   rollup-plugin-copy: 3.4.0
   rollup-plugin-empty-dir: 1.0.5
   rollup-plugin-postcss: 4.0.2
-  rollup-plugin-svelte: 7.1.3
+  rollup-plugin-svelte: 7.1.4
   rollup-plugin-terser: 7.0.2
   svelte: 3.55.1
   svelte-preprocess: 5.0.1
@@ -42,7 +42,7 @@ devDependencies:
   rollup-plugin-copy: 3.4.0
   rollup-plugin-empty-dir: 1.0.5_rollup@2.79.1
   rollup-plugin-postcss: 4.0.2_postcss@8.4.21
-  rollup-plugin-svelte: 7.1.3_wqqnxzvosiw4srqlri2xb7asou
+  rollup-plugin-svelte: 7.1.4_wqqnxzvosiw4srqlri2xb7asou
   rollup-plugin-terser: 7.0.2_rollup@2.79.1
   svelte: 3.55.1
   svelte-preprocess: 5.0.1_pehl75e5jsy22vp33udjja4soi
@@ -2181,8 +2181,8 @@ packages:
       - ts-node
     dev: true
 
-  /rollup-plugin-svelte/7.1.3_wqqnxzvosiw4srqlri2xb7asou:
-    resolution: {integrity: sha512-kQiZP++PZOObMEZBQcdFdRj0K5ucL496qiYtwo/toFbd8a/1x1gG2kF5yY+PxxYiXUv4S4OVnCd3T02c74TXWQ==}
+  /rollup-plugin-svelte/7.1.4_wqqnxzvosiw4srqlri2xb7asou:
+    resolution: {integrity: sha512-Jm0FCydR7k8bBGe7wimXAes8x2zEK10Ew3f3lEZwYor/Zya3X0AZVeSAPRH7yiXB9hWQVzJu597EUeNwGDTdjQ==}
     engines: {node: '>=10'}
     peerDependencies:
       rollup: '>=2.0.0'
