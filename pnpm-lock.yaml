@@ -13,7 +13,7 @@ specifiers:
   luxon: 3.3.0
   postcss: 8.4.21
   rollup: 2.79.1
-  rollup-plugin-chrome-extension: 3.6.11
+  rollup-plugin-chrome-extension: 3.6.12
   rollup-plugin-copy: 3.4.0
   rollup-plugin-empty-dir: 1.0.5
   rollup-plugin-postcss: 4.0.2
@@ -38,7 +38,7 @@ devDependencies:
   filesize: 10.0.6
   postcss: 8.4.21
   rollup: 2.79.1
-  rollup-plugin-chrome-extension: 3.6.11
+  rollup-plugin-chrome-extension: 3.6.12
   rollup-plugin-copy: 3.4.0
   rollup-plugin-empty-dir: 1.0.5_rollup@2.79.1
   rollup-plugin-postcss: 4.0.2_postcss@8.4.21
@@ -2138,8 +2138,8 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup-plugin-chrome-extension/3.6.11:
-    resolution: {integrity: sha512-LBYRE1/lcelgvFcJXtHI5bMrGAp1SmHcpvXPdSyX4pGv7c717Il7evlBO/WoXUVbY66ZswKfINPK1Kz/eLXXyA==}
+  /rollup-plugin-chrome-extension/3.6.12:
+    resolution: {integrity: sha512-su5ZpDBX4iA8f16pYagx4K+y+CLKkyq7FV2iNzTWK87mbbkAAWf1bKY+UFs8VwzLpxB5SUjYLnNlAum2Ny5GdQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@types/lodash': 4.14.191
