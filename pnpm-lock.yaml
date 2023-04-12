@@ -16,8 +16,8 @@ devDependencies:
     specifier: 5.0.2
     version: 5.0.2(rollup@2.79.1)
   '@types/chrome':
-    specifier: 0.0.229
-    version: 0.0.229
+    specifier: 0.0.231
+    version: 0.0.231
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.21)
@@ -406,8 +406,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /@types/chrome@0.0.229:
-    resolution: {integrity: sha512-4dg80wr/0AxRiDxqQzHLRtiEbzYCipBpQFUGpuBfsSoIYuLMm0xH11gHc/uvNwoWDXKUsLFn8GLiYdAjt09RPQ==}
+  /@types/chrome@0.0.231:
+    resolution: {integrity: sha512-K3dSpeorWAj2UA/1GRUbny34+PARsH/k8bj8dRZQusSqNE323QEGils9ty1LaVyR1DnfLMD9PX8cV5Q+EhwAvQ==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.10
