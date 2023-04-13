@@ -34,7 +34,7 @@
 		"tailwindcss": "3.3.1"
 	},
 	"dependencies": {
-		"entities": "4.4.0",
+		"entities": "4.5.0",
 		"luxon": "3.3.0"
 	}
 }
