@@ -57,16 +57,16 @@ devDependencies:
     version: 4.0.2(postcss@8.4.24)
   rollup-plugin-svelte:
     specifier: 7.1.6
-    version: 7.1.6(rollup@2.79.1)(svelte@4.0.1)
+    version: 7.1.6(rollup@2.79.1)(svelte@4.0.2)
   rollup-plugin-terser:
     specifier: 7.0.2
     version: 7.0.2(rollup@2.79.1)
   svelte:
-    specifier: 4.0.1
-    version: 4.0.1
+    specifier: 4.0.2
+    version: 4.0.2
   svelte-preprocess:
     specifier: 5.0.4
-    version: 5.0.4(postcss@8.4.24)(svelte@4.0.1)
+    version: 5.0.4(postcss@8.4.24)(svelte@4.0.2)
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -1494,7 +1494,7 @@ packages:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
   /magic-string@0.30.0:
@@ -2327,7 +2327,7 @@ packages:
       - ts-node
     dev: true
 
-  /rollup-plugin-svelte@7.1.6(rollup@2.79.1)(svelte@4.0.1):
+  /rollup-plugin-svelte@7.1.6(rollup@2.79.1)(svelte@4.0.2):
     resolution: {integrity: sha512-nVFRBpGWI2qUY1OcSiEEA/kjCY2+vAjO9BI8SzA7NRrh2GTunLd6w2EYmnMt/atgdg8GvcNjLsmZmbQs/u4SQA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -2337,7 +2337,7 @@ packages:
       '@rollup/pluginutils': 4.2.1
       resolve.exports: 2.0.0
       rollup: 2.79.1
-      svelte: 4.0.1
+      svelte: 4.0.2
     dev: true
 
   /rollup-plugin-terser@7.0.2(rollup@2.79.1):
@@ -2492,7 +2492,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-preprocess@5.0.4(postcss@8.4.24)(svelte@4.0.1):
+  /svelte-preprocess@5.0.4(postcss@8.4.24)(svelte@4.0.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
     requiresBuild: true
@@ -2536,11 +2536,11 @@ packages:
       postcss: 8.4.24
       sorcery: 0.11.0
       strip-indent: 3.0.0
-      svelte: 4.0.1
+      svelte: 4.0.2
     dev: true
 
-  /svelte@4.0.1:
-    resolution: {integrity: sha512-7n2u7A5cu8xCY6MBiXh/Mg6Lh3+Mw2qXlTDBYhzvCvmSM4L4gc4MVo540UtGcjqBiA48E1VDW+EUpBr7iuBlPg==}
+  /svelte@4.0.2:
+    resolution: {integrity: sha512-nqyyUaiKILhi3Lhd8zKTEvZHSy/g3KLKYDbuu03DnHevaT8NK7tb3eQN4XRgvd5Htb/okQKVdnZDPy2RgSKzsw==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
