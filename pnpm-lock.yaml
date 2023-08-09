@@ -35,8 +35,8 @@ devDependencies:
     specifier: 0.8.0
     version: 0.8.0
   filesize:
-    specifier: 10.0.8
-    version: 10.0.8
+    specifier: 10.0.9
+    version: 10.0.9
   postcss:
     specifier: 8.4.27
     version: 8.4.27
@@ -1133,8 +1133,8 @@ packages:
     resolution: {integrity: sha512-FAdS4qMuFjsJj6XHbBaZeXOgaypXp8iw/Tpyuq/w3XA41jjLHT8NPA+n7czH/DDhdncq0nAyDZmPeWXh2qmdIg==}
     dev: true
 
-  /filesize@10.0.8:
-    resolution: {integrity: sha512-/ylBrxZ1GAjgh2CEemKKLwTtmXfWqTtN1jRl6iqLwnMEucUX5cmaCCUPGstQOHVCcK9uYL6o1cPNakLQU2sasQ==}
+  /filesize@10.0.9:
+    resolution: {integrity: sha512-BzSxJtyq7ZEBjQPEC6u7GNrK58xwaITCvHPaH7e5145eowrMwLfm5LMu/7PeHTTKxP4joIyNmxCbVJVXv7xPGQ==}
     engines: {node: '>= 10.4.0'}
     dev: true
 
