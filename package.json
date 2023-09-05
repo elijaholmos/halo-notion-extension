@@ -35,6 +35,6 @@
 	},
 	"dependencies": {
 		"entities": "4.5.0",
-		"luxon": "3.4.2"
+		"luxon": "3.4.3"
 	}
 }
