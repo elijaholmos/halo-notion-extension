@@ -21,7 +21,7 @@
 		"daisyui": "3.8.1",
 		"fflate": "0.8.1",
 		"filesize": "10.0.12",
-		"postcss": "8.4.30",
+		"postcss": "8.4.31",
 		"rollup": "2.79.1",
 		"rollup-plugin-chrome-extension": "3.6.12",
 		"rollup-plugin-copy": "3.5.0",
