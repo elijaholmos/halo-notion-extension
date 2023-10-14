@@ -22,7 +22,7 @@
 		"fflate": "0.8.1",
 		"filesize": "10.1.0",
 		"postcss": "8.4.31",
-		"rollup": "4.0.2",
+		"rollup": "4.1.0",
 		"rollup-plugin-chrome-extension": "3.6.12",
 		"rollup-plugin-copy": "3.5.0",
 		"rollup-plugin-empty-dir": "1.0.5",
