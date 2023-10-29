@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "15.2.3",
-		"@rollup/plugin-replace": "5.0.4",
+		"@rollup/plugin-replace": "5.0.5",
 		"@types/chrome": "0.0.248",
 		"autoprefixer": "10.4.16",
 		"colorette": "2.0.20",
