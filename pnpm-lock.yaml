@@ -57,16 +57,16 @@ devDependencies:
     version: 4.0.2(postcss@8.4.31)
   rollup-plugin-svelte:
     specifier: 7.1.6
-    version: 7.1.6(rollup@4.4.1)(svelte@4.2.4)
+    version: 7.1.6(rollup@4.4.1)(svelte@4.2.5)
   rollup-plugin-terser:
     specifier: 7.0.2
     version: 7.0.2(rollup@4.4.1)
   svelte:
-    specifier: 4.2.4
-    version: 4.2.4
+    specifier: 4.2.5
+    version: 4.2.5
   svelte-preprocess:
     specifier: 5.1.0
-    version: 5.1.0(postcss@8.4.31)(svelte@4.2.4)
+    version: 5.1.0(postcss@8.4.31)(svelte@4.2.5)
   tailwindcss:
     specifier: 3.3.5
     version: 3.3.5
@@ -2429,7 +2429,7 @@ packages:
       - ts-node
     dev: true
 
-  /rollup-plugin-svelte@7.1.6(rollup@4.4.1)(svelte@4.2.4):
+  /rollup-plugin-svelte@7.1.6(rollup@4.4.1)(svelte@4.2.5):
     resolution: {integrity: sha512-nVFRBpGWI2qUY1OcSiEEA/kjCY2+vAjO9BI8SzA7NRrh2GTunLd6w2EYmnMt/atgdg8GvcNjLsmZmbQs/u4SQA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -2439,7 +2439,7 @@ packages:
       '@rollup/pluginutils': 4.2.1
       resolve.exports: 2.0.0
       rollup: 4.4.1
-      svelte: 4.2.4
+      svelte: 4.2.5
     dev: true
 
   /rollup-plugin-terser@7.0.2(rollup@4.4.1):
@@ -2614,7 +2614,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-preprocess@5.1.0(postcss@8.4.31)(svelte@4.2.4):
+  /svelte-preprocess@5.1.0(postcss@8.4.31)(svelte@4.2.5):
     resolution: {integrity: sha512-EkErPiDzHAc0k2MF5m6vBNmRUh338h2myhinUw/xaqsLs7/ZvsgREiLGj03VrSzbY/TB5ZXgBOsKraFee5yceA==}
     engines: {node: '>= 14.10.0'}
     requiresBuild: true
@@ -2658,11 +2658,11 @@ packages:
       postcss: 8.4.31
       sorcery: 0.11.0
       strip-indent: 3.0.0
-      svelte: 4.2.4
+      svelte: 4.2.5
     dev: true
 
-  /svelte@4.2.4:
-    resolution: {integrity: sha512-hpl7nZhSY+pCL/gsXTyixmGR9H0qDrbn9TT8wfLQyX9jRZeDgIvMca7vrE/tgPXZmQpjIcJ6AsoSdAlyRCDuiQ==}
+  /svelte@4.2.5:
+    resolution: {integrity: sha512-P9YPKsGkNdw4OJbtpd1uzimQHPj7Ai2sPcOHmmD6VgkFhFDmcYevQi7vE4cQ1g8/Vs64aL2TwMoCNFAzv7TPaQ==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
