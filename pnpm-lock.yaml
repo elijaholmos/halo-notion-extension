@@ -65,8 +65,8 @@ devDependencies:
     specifier: 4.2.7
     version: 4.2.7
   svelte-preprocess:
-    specifier: 5.1.0
-    version: 5.1.0(postcss@8.4.31)(svelte@4.2.7)
+    specifier: 5.1.1
+    version: 5.1.1(postcss@8.4.31)(svelte@4.2.7)
   tailwindcss:
     specifier: 3.3.5
     version: 3.3.5
@@ -2614,8 +2614,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-preprocess@5.1.0(postcss@8.4.31)(svelte@4.2.7):
-    resolution: {integrity: sha512-EkErPiDzHAc0k2MF5m6vBNmRUh338h2myhinUw/xaqsLs7/ZvsgREiLGj03VrSzbY/TB5ZXgBOsKraFee5yceA==}
+  /svelte-preprocess@5.1.1(postcss@8.4.31)(svelte@4.2.7):
+    resolution: {integrity: sha512-p/Dp4hmrBW5mrCCq29lEMFpIJT2FZsRlouxEc5qpbOmXRbaFs7clLs8oKPwD3xCFyZfv1bIhvOzpQkhMEVQdMw==}
     engines: {node: '>= 14.10.0'}
     requiresBuild: true
     peerDependencies:
