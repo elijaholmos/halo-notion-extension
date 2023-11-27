@@ -29,8 +29,8 @@ devDependencies:
     specifier: 2.0.20
     version: 2.0.20
   daisyui:
-    specifier: 4.4.9
-    version: 4.4.9(postcss@8.4.31)
+    specifier: 4.4.10
+    version: 4.4.10(postcss@8.4.31)
   fflate:
     specifier: 0.8.1
     version: 0.8.1
@@ -1025,8 +1025,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /daisyui@4.4.9(postcss@8.4.31):
-    resolution: {integrity: sha512-Wqk1f3rQbiDSMfzC/ZufQQi139dY4mCMZJ/hmYIIGpCi0MFndU0wJ575tEGzi2YrCZOagsWhbOeWE7DD/B5pVw==}
+  /daisyui@4.4.10(postcss@8.4.31):
+    resolution: {integrity: sha512-NGDsOLtCQ9UzfeOUlKn1lwneQte4UoINmAaDBcrMAbZviu/jWm7PSR9DqH3eE/AY/TpkImdAPVK+kGsZlpEFkQ==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
