@@ -17,28 +17,32 @@
 import { init, stores } from './stores';
 import { triggerNotionAuthFlow } from './util/auth';
 import chromeStorageSyncStore from './util/chromeStorageSyncStore';
-import { getHaloCookies, getHaloUserInfo, getUserId, getUserOverview } from './util/halo';
+import { getInformation, getHaloUserInfo, getUserId, getUserOverview } from './util/halo';
 // no stores - code is not shared between background and popup
 
 const VERSION = chrome.runtime.getManifest().version;
-const COOKIE_KEY = 'halo_cookies';
 
 (async function () {
 	console.log(`${chrome.runtime.getManifest().name} v${VERSION}`);
 
 	console.log('initializing ApplicationStoreManager');
-	const initial_cookies = await getHaloCookies();
+	const { ['userId']: userId, ...cookies } = await getInformation();
+	console.log('fetched user id', userId);
+	console.log('fetched halo cookies', cookies);
 	await init([
 		chromeStorageSyncStore({ key: 'notion_info' }),
-		chromeStorageSyncStore({ key: COOKIE_KEY, initial_value: initial_cookies }),
-		chromeStorageSyncStore({ key: 'halo_info', initial_value: () => getHaloUserInfo({ cookie: initial_cookies }) }),
+		chromeStorageSyncStore({ key: 'halo_cookies', initial_value: cookies }),
+		chromeStorageSyncStore({
+			key: 'halo_info',
+			initial_value: async () => await getHaloUserInfo({ cookie: cookies }),
+		}),
 		chromeStorageSyncStore({
 			key: 'selected_classes',
 			initial_value: async () =>
 				(
 					await getUserOverview({
-						uid: await getUserId({ cookie: initial_cookies }),
-						cookie: initial_cookies,
+						uid: userId,
+						cookie: cookies,
 					})
 				)?.classes?.courseClasses
 					?.filter(({ stage }) => stage !== 'POST')
@@ -61,8 +65,6 @@ const COOKIE_KEY = 'halo_cookies';
 		})();
 		return true; //required if using async/await in a message listener
 	});
-
-	//halo_cookies.set(await getHaloCookies()); //should be unnecessary w initial_value
 
 	// currently broken, see https://github.com/GoogleChrome/developer.chrome.com/issues/2602
 	chrome.runtime.onInstalled.addListener(

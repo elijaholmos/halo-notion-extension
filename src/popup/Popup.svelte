@@ -22,7 +22,9 @@
 	const { notion_info, halo_cookies, halo_info } = stores;
 
 	console.log('in popup');
-	console.log(notion_info);
+	console.log('notion_info', notion_info.get());
+	console.log('cookies', halo_cookies.get());
+	console.log('halo_info', halo_info.get());
 
 	// reactive store destructuring https://svelte.dev/repl/a602f67808bb472296459df76af77464?version=3.35.0
 	$: ({ access_token } = $notion_info || {});
@@ -39,7 +41,7 @@
 				extension to work
 			</p>
 		</Error>
-	{:else if !roles.some(({ baseRole, isActive }) => baseRole === 'Student' && isActive)}
+	{:else if !roles?.some(({ baseRole, isActive }) => baseRole === 'Student' && isActive)}
 		<Error>
 			<p>You must be an active GCU student to use this extension</p>
 		</Error>

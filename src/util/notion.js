@@ -17,7 +17,7 @@
 import { decodeHTML } from 'entities';
 import { DateTime } from 'luxon';
 import { stores } from '../stores';
-import { getClassInformation, getHaloCookies } from './halo';
+import { getClassInformation, getInformation } from './halo';
 const _url = 'https://halo-notion.vercel.app/api/proxy?url=';
 let database_id;
 
@@ -89,7 +89,10 @@ const chunkSubstr = function (str, size) {
 };
 
 export const prepClassAssignmentImport = async function ({ slugId, cookie }) {
-	if (!cookie) cookie = await getHaloCookies();
+	if (!cookie) {
+		const { ['userId']: _, ...remainderCookie } = await getInformation();
+		cookie = remainderCookie;
+	}
 	if (!database_id) await getAssignmentsDatabaseId(); //cache database_id if it hasn't been stored
 
 	const current_class = await getClassInformation({ cookie, slugId });
@@ -268,9 +271,10 @@ export const populateClassAssignments = async function (slugId) {
 		return null;
 	};
 
-	const current_class = await getClassInformation({ cookie: await getHaloCookies(), slugId });
+	const { ['userId']: _, ...remainderCookie } = await getInformation();
+	const current_class = await getClassInformation({ cookie: remainderCookie, slugId });
 
-	const totalpoints = current_class.units.reduce(
+	const totalPoints = current_class.units.reduce(
 		(acc, { assessments }) => acc + assessments.reduce((a, { points }) => points + a, 0),
 		0
 	);

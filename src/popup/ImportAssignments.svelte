@@ -15,12 +15,12 @@
 -->
 <script>
 	import { stores } from '../stores';
-	import { getHaloCookies, getUserId, getUserOverview } from '../util/halo';
+	import { getInformation, getUserId, getUserOverview } from '../util/halo';
 	import { importSingleAssignment, prepClassAssignmentImport } from '../util/notion';
 	import Error from './components/Error.svelte';
 	import ProgressBar from './components/ProgressBar.svelte';
 	import LazyLoader from './LazyLoader.svelte';
-	const { halo_cookies, selected_classes } = stores;
+	const { halo_cookies, selected_classes, notion_info } = stores;
 
 	// ----- state -----
 	let error;
@@ -29,11 +29,16 @@
 	let currentCourse = {};
 	$: ({ value, max, courseCode, done } = currentCourse);
 
+	const logout = async function () {
+		notion_info.set(null);
+		console.log('logged out of notion!');
+	};
+
 	const importAssignments = async function () {
 		if (isImportingAssignments) return;
 		isImportingAssignments = true;
 		currentCourse.done = false;
-		const cookie = await getHaloCookies(); //get latest cookie
+		const { ['userId']: _, ...cookie } = await getInformation(); //get latest cookie
 
 		// get full class objects
 		const { classes } = await getUserOverview({
@@ -98,6 +103,7 @@
 
 		<div class="flex flex-col items-center">
 			<button class="btn btn-primary btn-md text-lg" on:click={importAssignments}> Import Assignments </button>
+			<button class="btn btn-secondary btn-md text-lg" on:click={logout}> Logout </button>
 			<br />
 			{#if isImportingAssignments}
 				<ProgressBar {max} {value} />
