@@ -1,7 +1,6 @@
 {
 	"manifest_version": 3,
 	"name": "Import Halo Assignments",
-	"version": "1.0.1",
 	"host_permissions": ["https://halo.gcu.edu/*"],
 	"permissions": ["cookies", "identity", "storage"],
 	"minimum_chrome_version": "92",
