@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Elijah Olmos
+ * Copyright (C) 2024 Elijah Olmos
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -17,7 +17,7 @@
 import { init, stores } from './stores';
 import { triggerNotionAuthFlow } from './util/auth';
 import chromeStorageSyncStore from './util/chromeStorageSyncStore';
-import { getInformation, getHaloUserInfo, getUserId, getUserOverview } from './util/halo';
+import { getHaloUserInfo, getInformation, getUserOverview } from './util/halo';
 // no stores - code is not shared between background and popup
 
 const VERSION = chrome.runtime.getManifest().version;
