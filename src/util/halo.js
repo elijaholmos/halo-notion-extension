@@ -18,81 +18,90 @@ export const AUTHORIZATION_KEY = 'TE1TX0FVVEg';
 export const CONTEXT_KEY = 'TE1TX0NPTlRFWFQ';
 const url = {
 	gateway: 'https://gateway.halo.gcu.edu',
-	validate: 'https://halo.gcu.edu/api/token-validate/',
+	validate: 'https://halo.gcu.edu/api/auth/session',
 };
 
 export const getUserOverview = async function ({ cookie, uid }) {
-	const res = await (
-		await fetch(url.gateway, {
-			method: 'POST',
-			headers: {
-				accept: '*/*',
-				'content-type': 'application/json',
-				authorization: `Bearer ${cookie[AUTHORIZATION_KEY]}`,
-				contexttoken: `Bearer ${cookie[CONTEXT_KEY]}`,
-			},
-			body: JSON.stringify({
-				//Specific GraphQL query syntax, reverse-engineered
-				operationName: 'HeaderFields',
-				variables: {
-					userId: uid,
-					skipClasses: false,
-				},
-				query: 'query HeaderFields($userId: String!, $skipClasses: Boolean!) {\n  userInfo: getUserById(id: $userId) {\n    id\n    firstName\n    lastName\n    userImgUrl\n    sourceId\n    __typename\n  }\n  classes: getCourseClassesForUser @skip(if: $skipClasses) {\n    courseClasses {\n      id\n      classCode\n      slugId\n      startDate\n      endDate\n      name\n      description\n      stage\n      modality\n      version\n      courseCode\n      units {\n        id\n        current\n        title\n        sequence\n        __typename\n      }\n      instructors {\n        ...headerUserFields\n        __typename\n      }\n      students {\n        isAccommodated\n        isHonors\n        ...headerUserFields\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment headerUserFields on CourseClassUser {\n  id\n  courseClassId\n  roleName\n  baseRoleName\n  status\n  userId\n  user {\n    ...headerUser\n    __typename\n  }\n  __typename\n}\n\nfragment headerUser on User {\n  id\n  userStatus\n  firstName\n  lastName\n  userImgUrl\n  sourceId\n  lastLogin\n  __typename\n}\n',
-			}),
-		})
-	).json();
+	console.log('getUserOverview', cookie, uid);
 
-	if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
-	//Error handling and data validation could be improved
-	if (res.error) return console.error(res.error);
-	return res.data;
+	const data = await fetch(url.gateway, {
+		method: 'POST',
+		headers: {
+			accept: '*/*',
+			'content-type': 'application/json',
+			authorization: `Bearer ${cookie[AUTHORIZATION_KEY]}`,
+			contexttoken: `Bearer ${cookie[CONTEXT_KEY]}`,
+		},
+		body: JSON.stringify({
+			//Specific GraphQL query syntax, reverse-engineered
+			operationName: 'HeaderFields',
+			variables: {
+				userId: uid,
+				skipClasses: false,
+			},
+			query: 'query HeaderFields($userId: String!, $skipClasses: Boolean!) {\n  userInfo: getUserById(id: $userId) {\n    id\n    firstName\n    lastName\n    userImgUrl\n    sourceId\n    __typename\n  }\n  classes: getCourseClassesForUser @skip(if: $skipClasses) {\n    courseClasses {\n      id\n      classCode\n      slugId\n      startDate\n      endDate\n      name\n      description\n      stage\n      modality\n      version\n      courseCode\n      units {\n        id\n        current\n        title\n        sequence\n        __typename\n      }\n      instructors {\n        ...headerUserFields\n        __typename\n      }\n      students {\n        isAccommodated\n        isHonors\n        ...headerUserFields\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment headerUserFields on CourseClassUser {\n  id\n  courseClassId\n  roleName\n  baseRoleName\n  status\n  userId\n  user {\n    ...headerUser\n    __typename\n  }\n  __typename\n}\n\nfragment headerUser on User {\n  id\n  userStatus\n  firstName\n  lastName\n  userImgUrl\n  sourceId\n  lastLogin\n  __typename\n}\n',
+		}),
+	});
+
+	try {
+		console.log(data);
+
+		const res = await data.json();
+
+		if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
+		//Error handling and data validation could be improved
+		if (res.error) return console.error(res.error);
+		return res.data;
+	} catch (e) {
+		console.log('getUserOverview error', e);
+		return {};
+	}
 };
 
 export const getUserId = async function ({ cookie }) {
-	const res = await (
-		await fetch(url.validate, {
-			method: 'POST',
-			headers: {
-				accept: '*/*',
-				'content-type': 'application/json',
-				authorization: `Bearer ${cookie[AUTHORIZATION_KEY]}`,
-				contexttoken: `Bearer ${cookie[CONTEXT_KEY]}`,
-			},
-			body: JSON.stringify({
-				userToken: cookie[AUTHORIZATION_KEY],
-				contextToken: cookie[CONTEXT_KEY],
-			}),
-		})
-	).json();
+	console.log('getUserId', cookie);
 
-	if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
-	//Error handling and data validation could be improved
-	if (res.error) return console.error(res.error);
-	return res.payload.userid;
+	const data = await fetch(url.validate, {
+		method: 'GET',
+		headers: {
+			accept: '*/*',
+			'content-type': 'application/json',
+		},
+	});
+
+	try {
+		console.log('getUserId-data', data);
+		const res = await data.json();
+
+		if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
+		//Error handling and data validation could be improved
+		if (res.error) return console.error(res.error);
+		return res['userId'];
+	} catch (e) {
+		throw { code: 500, error: e };
+	}
 };
 
 export const getHaloUserInfo = async function ({ cookie }) {
-	const res = await (
-		await fetch(url.validate, {
-			method: 'POST',
-			headers: {
-				accept: '*/*',
-				'content-type': 'application/json',
-				authorization: `Bearer ${cookie[AUTHORIZATION_KEY]}`,
-				contexttoken: `Bearer ${cookie[CONTEXT_KEY]}`,
-			},
-			body: JSON.stringify({
-				userToken: cookie[AUTHORIZATION_KEY],
-				contextToken: cookie[CONTEXT_KEY],
-			}),
-		})
-	).json();
+	const data = await fetch(url.validate, {
+		method: 'GET',
+		headers: {
+			accept: '*/*',
+			'content-type': 'application/json',
+		},
+	});
 
-	if (res?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
-	//Error handling and data validation could be improved
-	if (res.error) return console.error(res.error);
-	return res.payload;
+	try {
+		const res = await data.json();
+		console.log('getHaloUserInfo', res);
+
+		if (res?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
+		//Error handling and data validation could be improved
+		if (res.error) return console.error(res.error);
+		return res;
+	} catch (e) {
+		throw { code: 500, cookie };
+	}
 };
 
 export const getClassInformation = async function ({ cookie, slugId }) {
@@ -119,16 +128,27 @@ export const getClassInformation = async function ({ cookie, slugId }) {
 	return res.data.currentClass;
 };
 
-export const getHaloCookies = async function () {
+export const getInformation = async function () {
 	try {
-		console.log('getHaloCookies');
-		const cookies = (await chrome.cookies.getAll({ url: 'https://halo.gcu.edu' })).reduce(
-			(acc, { name, value }) => ({ ...acc, [name]: value }),
-			{}
-		);
-		return cookies;
+		const data = await fetch(url.validate, {
+			method: 'GET',
+			headers: {
+				accept: '*/*',
+				'content-type': 'application/json',
+			},
+		});
+
+		const res = await data.json();
+
+		const output = {
+			[AUTHORIZATION_KEY]: res['authToken'],
+			[CONTEXT_KEY]: res['contextToken'],
+			userId: res['userId'],
+		};
+		console.log('information', output);
+
+		return output;
 	} catch (e) {
-		console.log('getHaloCookies error', e);
-		return {};
+		return { code: 500, error: e };
 	}
 };

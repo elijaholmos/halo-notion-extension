@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Import Halo Assignments",
-	"host_permissions": ["*://halo.gcu.edu/"],
+	"host_permissions": ["https://halo.gcu.edu/*"],
 	"permissions": ["cookies", "identity", "storage"],
 	"minimum_chrome_version": "92",
 	"action": {
@@ -14,8 +14,7 @@
 		"default_popup": "popup/index.html"
 	},
 	"background": {
-		"service_worker": "background.js",
-		"type": "module"
+		"service_worker": "background.js"
 	},
 	"icons": {
 		"16": "static/icon-16.png",

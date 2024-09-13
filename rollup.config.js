@@ -24,7 +24,7 @@ import postcss from 'rollup-plugin-postcss';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
-import zip from './plugins/zip.plugin';
+import zip from './plugins/zip.plugin.js';
 
 const production = !process.env.ROLLUP_WATCH;
 
