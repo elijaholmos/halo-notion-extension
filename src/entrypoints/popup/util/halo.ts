@@ -14,7 +14,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ClassesGQL } from "@/shared/util/types";
+import {
+	ClassesGQL,
+	HaloValidateResponse,
+	CourseClassResponse,
+	CourseClass,
+} from "@/shared/util/types";
 
 export const AUTHORIZATION_KEY = 'TE1TX0FVVEg';
 export const CONTEXT_KEY = 'TE1TX0NPTlRFWFQ';
@@ -23,7 +28,7 @@ const url = {
 	validate: 'https://halo.gcu.edu/api/auth/session',
 };
 
-export const getUserOverview = async function ({ cookie, uid }: { cookie: Record<string, string>; uid: string }) {
+export const getUserOverview = async function ({ cookie, uid }: { cookie: Record<string, string>; uid: string }): Promise<ClassesGQL | {}> {
 	console.log('getUserOverview', cookie, uid);
 
 	const data = await fetch(url.gateway, {
@@ -52,7 +57,7 @@ export const getUserOverview = async function ({ cookie, uid }: { cookie: Record
 
 		if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
 		//Error handling and data validation could be improved
-		if (res.error) return console.error(res.error);
+		if (res.error) { console.error(res.error); return {}; }
 		return res.data as ClassesGQL;
 	} catch (e) {
 		console.log('getUserOverview error', e);
@@ -60,7 +65,7 @@ export const getUserOverview = async function ({ cookie, uid }: { cookie: Record
 	}
 };
 
-export const getUserId = async function ({ cookie }: { cookie: Record<string, string> }) {
+export const getUserId = async function ({ cookie }: { cookie: Record<string, string> }): Promise<string | undefined> {
 	console.log('getUserId', cookie);
 
 	const data = await fetch(url.validate, {
@@ -77,14 +82,14 @@ export const getUserId = async function ({ cookie }: { cookie: Record<string, st
 
 		if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
 		//Error handling and data validation could be improved
-		if (res.error) return console.error(res.error);
+		if (res.error) { console.error(res.error); return undefined; }
 		return res['userId'];
 	} catch (e) {
 		throw { code: 500, error: e };
 	}
 };
 
-export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<string, string> }) {
+export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<string, string> }): Promise<HaloValidateResponse | undefined> {
 	const data = await fetch(url.validate, {
 		method: 'GET',
 		headers: {
@@ -99,8 +104,8 @@ export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<stri
 
 		if (res?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
 		//Error handling and data validation could be improved
-		if (res.error) return console.error(res.error);
-		return res;
+		if (res.error) { console.error(res.error); return undefined; }
+		return res as HaloValidateResponse;
 	} catch (e) {
 		throw { code: 500, cookie };
 	}
@@ -112,7 +117,7 @@ export const getClassInformation = async function ({
 }: {
 	cookie: Record<string, string>;
 	slugId: string;
-}) {
+}): Promise<CourseClass> {
 	const res = await (
 		await fetch(url.gateway, {
 			method: 'POST',
@@ -131,12 +136,15 @@ export const getClassInformation = async function ({
 	).json();
 
 	if (res?.errors?.[0]?.message?.includes('401')) throw res.errors;
-	//Error handling and data validation could be improved
-	if (res.error) return console.error(res.error);
-	return res.data.currentClass;
+	if (res.error) { console.error(res.error); throw new Error('API error'); }
+	return res.data.currentClass as CourseClass;
 };
 
-export const getInformation = async function () {
+export const getInformation = async function (): Promise<{
+	[AUTHORIZATION_KEY]: string;
+	[CONTEXT_KEY]: string;
+	userId: string;
+} | { code: number; error: unknown }> {
 	try {
 		const data = await fetch(url.validate, {
 			method: 'GET',
