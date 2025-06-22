@@ -14,15 +14,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
+import { getClassInformation, getInformation } from '../../../shared/util/halo';
+import { parseISO } from 'date-fns/parseISO';
+import { formatISO } from 'date-fns/formatISO';
 import { decodeHTML } from 'entities';
-import { stores } from '../../entrypoints/popup/stores';
-import { getClassInformation, getInformation } from './halo';
-import { parseISO, formatISO } from 'date-fns';
 const _url = 'https://halo-notion.vercel.app/api/proxy?url=';
 let database_id: string | null = null;
 
 console.log('in notion.js');
-console.log(stores);
+console.log(notionInfo);
 
 const headers = new Proxy(
 	{
@@ -32,7 +33,7 @@ const headers = new Proxy(
 	},
 	{
 		get: (target: any, prop: string) => {
-			if (prop === 'Authorization') return `Bearer ${stores.notion_info.get()?.access_token}`;
+			if (prop === 'Authorization') return `Bearer ${notionInfo.get()?.access_token}`;
 
 			return target[prop as keyof typeof target];
 		},
@@ -89,21 +90,25 @@ const chunkSubstr = function (str: string, size: number) {
 };
 
 export const prepClassAssignmentImport = async function ({ slugId, cookie }: { slugId: string; cookie: any }) {
+	// If no cookie, is provided, we get the cookie by calling getInformation
 	if (!cookie) {
 		const { ['userId']: _, ...remainderCookie } = await getInformation() as any;
 		cookie = remainderCookie;
 	}
 	if (!database_id) await getAssignmentsDatabaseId(); //cache database_id if it hasn't been stored
 
+	// grab the current class by passing the cookie and slugId
 	const current_class = await getClassInformation({ cookie, slugId: slugId as string });
 
+	// calculate the total points for the class
 	const totalpoints = current_class.units.reduce(
 		(acc: number, { assessments }: { assessments: any[] }) => acc + assessments.reduce((a: number, { points }: { points: number }) => points + a, 0),
 		0
 	);
-
+	// calculate the max number of assessments for the class
 	const max = current_class.units.reduce((acc: number, { assessments }: { assessments: any[] }) => acc + assessments.length, 0);
 
+	// return the current class, total points, and max number of assessments
 	return {
 		current_class,
 		totalpoints,
@@ -111,10 +116,12 @@ export const prepClassAssignmentImport = async function ({ slugId, cookie }: { s
 	};
 };
 
+// import a single assignment
 export const importSingleAssignment = async function ({ assessment, current_class, unit, totalpoints }: { assessment: any, current_class: any, unit: any, totalpoints: number }) {
-	if (!database_id) await getAssignmentsDatabaseId(); //cache database_id if it hasn't been stored
+	// cache database_id if it hasn't been stored
+	if (!database_id) await getAssignmentsDatabaseId();
 
-	// utility function
+	// utility function to parse the URL
 	const parseURL = function (data: any, slugId: string) {
 		if (data.isGroupEnabled) return `https://halo.gcu.edu/courses/${slugId}/groups?assessmentId=${data.id}`;
 		if (['ASSIGNMENT', 'PARTICIPATION'].includes(data.type))
@@ -122,6 +129,7 @@ export const importSingleAssignment = async function ({ assessment, current_clas
 		return null;
 	};
 
+	// create the page
 	return await createPage({
 		database_id: database_id as string,
 		properties: {
@@ -260,10 +268,12 @@ export const importSingleAssignment = async function ({ assessment, current_clas
 	});
 };
 
+// populate the class assignments
 export const populateClassAssignments = async function (slugId: string) {
-	const database_id = await getAssignmentsDatabaseId(); //retrieve and "cache"
+	// retrieve and "cache" the database_id
+	const database_id = await getAssignmentsDatabaseId();
 
-	// utility function
+	// utility function to parse the URL
 	const parseURL = function (data: any, slugId: string) {
 		if (data.isGroupEnabled) return `https://halo.gcu.edu/courses/${slugId}/groups?assessmentId=${data.id}`;
 		if (data.type === 'ASSIGNMENT' || data.type === 'PARTICIPATION')

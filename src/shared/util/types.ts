@@ -72,8 +72,8 @@ export type HaloValidateResponse = {
 
 export type SocialContact = {
   id: string;
-  value: string;
   socialContactType: string;
+  value: string;
   __typename: 'SocialContact';
 };
 
@@ -93,16 +93,15 @@ export type User = {
 };
 
 export type CourseClassUser = {
-  courseClassId: string;
-  createdDate: string;
-  id: string;
-  isHonors: boolean | null;
   isAccommodated: boolean | null;
-  user: User;
-  baseRoleName: string;
+  isHonors: boolean | null;
+  id: string;
+  courseClassId: string;
   roleName: string;
+  baseRoleName: string;
   status: string;
   userId: string;
+  user: UserInfo;
   __typename: 'CourseClassUser';
 };
 
@@ -142,14 +141,9 @@ export type CourseClassAssessment = {
 
 export type CourseClassUnit = {
   id: string;
+  current: boolean;
   title: string;
   sequence: number;
-  startDate: string;
-  endDate: string;
-  current: boolean;
-  points: number | null;
-  description: string;
-  assessments: CourseClassAssessment[];
   __typename: 'CourseClassUnit';
 };
 
@@ -181,26 +175,19 @@ export type CourseClassParticipationPolicy = {
 export type CourseClass = {
   id: string;
   classCode: string;
+  sectionId: string;
   slugId: string;
-  degreeLevel: string;
   startDate: string;
   endDate: string;
-  description: string;
   name: string;
+  description: string;
   stage: string;
   modality: string;
-  modifiedDate: string;
-  credits: number;
-  courseCode: string;
   version: string;
-  lastPublishedDate: string | null;
-  sectionId: string;
-  holidays: any[];
-  students: CourseClassUser[];
-  participationPolicy: CourseClassParticipationPolicy;
-  gradeScale: GradeScale;
-  instructors: CourseClassUser[];
+  courseCode: string;
   units: CourseClassUnit[];
+  instructors: Instructor[];
+  students: Student[];
   __typename: 'CourseClass';
 };
 
@@ -208,4 +195,39 @@ export type CourseClassResponse = {
   data: {
     currentClass: CourseClass;
   };
+};
+
+// --- UserOverview and related types (overwrite if present) ---
+export type UserAccessGroup = {
+  accessGroup: string;
+  __typename: 'UserAccessGroup';
+};
+
+export type UserInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  preferredFirstName: string | null;
+  userImgUrl: string | null;
+  userAccessGroups: UserAccessGroup[];
+  sourceId: string;
+  __typename: 'User';
+};
+
+export type Instructor = CourseClassUser;
+export type Student = CourseClassUser;
+
+export type PagedCourseClass = {
+  courseClasses: CourseClass[];
+  __typename: 'PagedCourseClass';
+};
+
+export type UserOverview = {
+  userInfo: UserInfo;
+  classes: PagedCourseClass;
 }; 
+
+export type HaloCookies = {
+  "TE1TX0FVVEg": string;
+  "TE1TX0NPTlRFWFQ": string;
+};

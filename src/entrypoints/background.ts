@@ -1,48 +1,58 @@
-// import { init, stores } from './src/shared/stores';
-// import { triggerNotionAuthFlow } from './util/auth';
-// import chromeStorageSyncStore from './util/chromeStorageSyncStore';
-import { getHaloUserInfo, getInformation, getUserOverview } from '../shared/util/halo';
+import { getHaloUserInfo, getInformation, getUserOverview } from '@/shared/util/halo';
+import { haloCookies, haloInfo, notionInfo, selectedClasses } from '@/shared/stores';
 
 export default defineBackground(() => {
 	// console.log(`${chrome.runtime.getManifest().name} v${VERSION}`);
 
 	(async () => {
-		console.log('initializing ApplicationStoreManager');
-		console.log('getting information');
+		console.log('Background script starting...');
 		const info = await getInformation();
-		if ('userId' in info) {
-			const { userId, ...cookies } = info;
-			// use here
-		} else {
-			console.error(info);
+		
+		if (!info || !('userId' in info)) {
+			console.log('User not logged into Halo. Extension will work once user logs in.');
+			return;
 		}
-		// console.log('fetched user id', userId);
-		// console.log('fetched halo cookies', cookies);
-		// await init([
-		// 	chromeStorageSyncStore({ key: 'notion_info' }),
-		// 	chromeStorageSyncStore({ key: 'halo_cookies', initial_value: cookies }),
-		// 	chromeStorageSyncStore({
-		// 		key: 'halo_info',
-		// 		initial_value: async () => await getHaloUserInfo({ cookie: cookies }),
-		// 	}),
-		// 	chromeStorageSyncStore({
-		// 		key: 'selected_classes',
-		// 		initial_value: async () =>
-		// 			(
-		// 				await getUserOverview({
-		// 					uid: userId,
-		// 					cookie: cookies,
-		// 				})
-		// 			)?.classes?.courseClasses
-		// 				?.filter(({ stage }) => stage !== 'POST')
-		// 				?.reduce((acc, { courseCode }) => ({ ...acc, [courseCode]: true }), {}),
-		// 	}),
-		// ]);
-		console.log('ApplicationStoreManager initialized');
-		// console.log(stores);
+		
+		const { userId, ...cookies } = info;
+		
+		// Check if we have valid cookies
+		if (!cookies.TE1TX0FVVEg || !cookies.TE1TX0NPTlRFWFQ) {
+			console.log('Invalid Halo cookies. User needs to log in again.');
+			return;
+		}
+		
+		console.log('User authenticated with Halo, fetching data...');
+		
+		// Set cookies first
+		haloCookies.set(cookies);
+
+		// Fetch and set the user's profile information
+		try {
+			const userInfo = await getHaloUserInfo({ cookie: cookies });
+			if (userInfo) {
+				haloInfo.set(userInfo);
+			}
+		} catch (error) {
+			console.error('Failed to get user information:', error);
+		}
+
+		// Fetch the user's classes and set the default selections
+		try {
+			const overview = await getUserOverview({ cookie: cookies, uid: userId });
+			if (overview?.classes?.courseClasses) {
+				const classesToSelect = overview.classes.courseClasses
+					.filter(({ stage }) => stage !== 'POST')
+					.reduce((acc, { courseCode }) => ({ ...acc, [courseCode]: true }), {});
+				selectedClasses.set(classesToSelect);
+			}
+		} catch (error) {
+			console.error('Failed to get user overview:', error);
+		}
+
+		console.log('Background script initialization complete');
 
 		// FIREFOX RESTRICTION: popup is closed during auth, so it needs to be triggered from background script
-		chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+		chrome.runtime.onMessage.addListener((msg: any, sender: any, sendResponse: any) => {
 			(async () => {
 				try {
 					if (sender.id !== chrome.runtime.id) return console.log('ids are not equal');
@@ -57,7 +67,8 @@ export default defineBackground(() => {
 
 		// currently broken, see https://github.com/GoogleChrome/developer.chrome.com/issues/2602
 		chrome.runtime.onInstalled.addListener(
-			({ reason }) => reason === chrome.runtime.OnInstalledReason.INSTALL && chrome.action.openPopup()
+			({ reason }: { reason: chrome.runtime.OnInstalledReason }) =>
+				reason === chrome.runtime.OnInstalledReason.INSTALL && chrome.action.openPopup()
 		);
 	})();
 });

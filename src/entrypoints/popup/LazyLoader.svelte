@@ -21,17 +21,21 @@
 <script lang="ts">
 	import Error from './components/Error.svelte';
 
-	export let lazyLoad = () => {};
+	let { lazyLoad, children }: { lazyLoad: () => Promise<void>, children: any } = $props();
 </script>
 
 <!-- Removed wrapper div becayse styling errors occurred -->
 
 {#await lazyLoad()}
 	<div class="flex flex-col justify-center h-screen">
-		<button class="btn btn-ghost btn-lg text-primary loading" />
+		<button class="btn btn-ghost btn-lg text-primary loading" aria-label="Loading..."></button>
 	</div>
 {:then}
-	<slot />
+	{@render children()}
 {:catch error}
-	<Error {error} />
+	<Error error={error.message}>
+		<div class="text-center">
+			<p>Error! {error.message}</p>
+		</div>
+	</Error>
 {/await}

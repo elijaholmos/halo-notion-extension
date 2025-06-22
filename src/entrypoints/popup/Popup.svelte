@@ -13,36 +13,37 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
-<script>
-	import { stores } from '../../shared/stores';
-	import { AUTHORIZATION_KEY, CONTEXT_KEY } from '../../shared/util/halo';
+<script lang="ts">
+	import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
+	import { AUTHORIZATION_KEY, CONTEXT_KEY } from '@/shared/util/halo';
 	import Error from './components/Error.svelte';
 	import ImportAssignments from './ImportAssignments.svelte';
 	import Login from './Login.svelte';
-	const { notion_info, halo_cookies, halo_info } = stores;
 
 	console.log('in popup');
-	console.log('notion_info', notion_info.get());
-	console.log('cookies', halo_cookies.get());
-	console.log('halo_info', halo_info.get());
+	console.log('notion_info', $notionInfo);
+	console.log('cookies', $haloCookies);
+	console.log('halo_info', $haloInfo);
 
-	// reactive store destructuring https://svelte.dev/repl/a602f67808bb472296459df76af77464?version=3.35.0
-	$: ({ access_token } = $notion_info || {});
-	$: halo_logged_in =
-		!$halo_cookies?.hasOwnProperty(AUTHORIZATION_KEY) || !$halo_cookies?.hasOwnProperty(CONTEXT_KEY);
-	$: ({ roles } = $halo_info || []);
+	// Svelte 5: Use $derived() instead of reactive statements
+	const access_token = $derived($notionInfo?.access_token);
+	const halo_logged_in = $derived(
+		!$haloCookies?.hasOwnProperty(AUTHORIZATION_KEY) || 
+		!$haloCookies?.hasOwnProperty(CONTEXT_KEY)
+	);
+	const roles = $derived($haloInfo?.roles);
 </script>
 
 <main>
 	{#if halo_logged_in}
-		<Error>
-			<p>
+		<Error error={null}>
+			<p class="text-center">
 				You need to log into <a href="https://halo.gcu.edu" class="link" target="_blank">halo.gcu.edu</a> for the
 				extension to work
 			</p>
 		</Error>
 	{:else if !roles?.some(({ baseRole, isActive }) => baseRole === 'Student' && isActive)}
-		<Error>
+		<Error error={null}>
 			<p>You must be an active GCU student to use this extension</p>
 		</Error>
 	{:else if !access_token}

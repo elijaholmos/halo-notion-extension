@@ -2,12 +2,5 @@
 	"extends": "./.wxt/tsconfig.json",
 	"compilerOptions": {
 		"useDefineForClassFields": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"module": "esnext",
-		"target": "esnext",
-		"strict": true,
-		"skipLibCheck": true,
 	}
 }

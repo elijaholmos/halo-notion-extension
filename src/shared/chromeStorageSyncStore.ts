@@ -96,3 +96,28 @@ export default async function ({ key, initial_value = null }: { key: string; ini
 
 	return { key, subscribe, get, set, update };
 }
+
+export function createPersistentStore<T>(key: string, initial: T) {
+	const store = writable<T>(initial);
+
+	// Load from chrome.storage on init
+	chrome.storage.sync.get([key], (result) => {
+		if (result[key] !== undefined) {
+			store.set(result[key]);
+		}
+	});
+
+	// Subscribe to store changes and persist to chrome.storage
+	store.subscribe((value) => {
+		chrome.storage.sync.set({ [key]: value });
+	});
+
+	// Listen for changes from other contexts
+	chrome.storage.onChanged.addListener((changes, area) => {
+		if (area === 'sync' && changes[key]) {
+			store.set(changes[key].newValue);
+		}
+	});
+
+	return store;
+}

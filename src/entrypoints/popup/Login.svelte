@@ -13,29 +13,33 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
-<script>
+<script lang="ts">
 	import Error from './components/Error.svelte';
 
-	//state
-	let error;
+	// Svelte 5: Use $state() for local state
+	let error = $state<string | null>(null);
 
 	const launchAuthFlow = async function () {
 		const message = await chrome.runtime.sendMessage('launch_auth');
-		if (!!message) error = { message };
+		if (!!message) error = message;
 	};
 </script>
 
 {#if error}
-	<Error {error} />
+	<Error {error}>
+		<div class="text-center">
+			<p>Error! {error}</p>
+		</div>
+	</Error>
 {:else}
 	<div class="flex flex-col items-center">
 		<img src="../static/logo.png" alt="IHA Logo" class="w-56 m-4" />
 		<h1 class="text-xl">Welcome!</h1>
-		<span class="h-4" />
-		<a id="login-button" class="dsl-notion-btn" title="Login with Notion" on:click={launchAuthFlow}>
-			<span class="dsl-notion-btn-icon" />
+		<span class="h-4"></span>
+		<button type="button" id="login-button" class="dsl-notion-btn" title="Login with Notion" onclick={launchAuthFlow}>
+			<span class="dsl-notion-btn-icon"></span>
 			<span>Login with Notion</span>
-		</a>
+		</button>
 		<a href="https://elijaho.notion.site/Import-Halo-Assignments-bb29114c25294a14a2fc24247fbabe53" target="_blank">
 			<button class="btn btn-md btn-primary gap-2">
 				<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

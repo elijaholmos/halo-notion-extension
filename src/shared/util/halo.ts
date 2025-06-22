@@ -19,6 +19,7 @@ import {
 	HaloValidateResponse,
 	CourseClassResponse,
 	CourseClass,
+	UserOverview,
 } from "@/shared/util/types";
 
 export const AUTHORIZATION_KEY = 'TE1TX0FVVEg';
@@ -28,7 +29,7 @@ const url = {
 	validate: 'https://halo.gcu.edu/api/auth/session',
 };
 
-export const getUserOverview = async function ({ cookie, uid }: { cookie: Record<string, string>; uid: string }): Promise<ClassesGQL | {}> {
+export const getUserOverview = async function ({ cookie, uid }: { cookie: Record<string, string>; uid: string }): Promise<UserOverview | null> {
 	console.log('getUserOverview', cookie, uid);
 
 	const data = await fetch(url.gateway, {
@@ -57,11 +58,11 @@ export const getUserOverview = async function ({ cookie, uid }: { cookie: Record
 
 		if (res.body?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
 		//Error handling and data validation could be improved
-		if (res.error) { console.error(res.error); return {}; }
-		return res.data as ClassesGQL;
+		if (res.error) { console.error(res.error); return null; }
+		return res.data as UserOverview;
 	} catch (e) {
 		console.log('getUserOverview error', e);
-		return {};
+		return null;
 	}
 };
 
@@ -89,7 +90,7 @@ export const getUserId = async function ({ cookie }: { cookie: Record<string, st
 	}
 };
 
-export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<string, string> }): Promise<HaloValidateResponse | undefined> {
+export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<string, string> }): Promise<HaloValidateResponse | null> {
 	const data = await fetch(url.validate, {
 		method: 'GET',
 		headers: {
@@ -104,7 +105,7 @@ export const getHaloUserInfo = async function ({ cookie }: { cookie: Record<stri
 
 		if (res?.errors?.[0]?.message?.includes('401')) throw { code: 401, cookie };
 		//Error handling and data validation could be improved
-		if (res.error) { console.error(res.error); return undefined; }
+		if (res.error) { console.error(res.error); return null; }
 		return res as HaloValidateResponse;
 	} catch (e) {
 		throw { code: 500, cookie };

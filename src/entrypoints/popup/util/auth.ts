@@ -14,7 +14,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { stores } from '../../entrypoints/popup/stores';
+import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
 const url = 'https://halo-notion.vercel.app/api';
 
 /**
@@ -38,7 +38,7 @@ const convertNotionAuthCodeToToken = async function ({ auth_code }: { auth_code:
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		body: new URLSearchParams({
 			code: auth_code,
-			redirect_uri: chrome.identity.getRedirectURL(),
+			redirect_uri: browser.identity.getRedirectURL(),
 		}).toString(),
 	});
 
@@ -48,12 +48,12 @@ const convertNotionAuthCodeToToken = async function ({ auth_code }: { auth_code:
 export const triggerNotionAuthFlow = function (): Promise<void> {
 	return new Promise((resolve, reject) => {
 		// CHROME RESTRICTION: is documented as returning a promise, does not actually return a promise
-		chrome.identity.launchWebAuthFlow(
+		browser.identity.launchWebAuthFlow(
 			{
-				url: `https://api.notion.com/v1/oauth/authorize?client_id=c4caddd8-0c2c-459c-8b86-26dba209bca3&response_type=code&owner=user&redirect_uri=${chrome.identity.getRedirectURL()}`,
+				url: `https://api.notion.com/v1/oauth/authorize?client_id=c4caddd8-0c2c-459c-8b86-26dba209bca3&response_type=code&owner=user&redirect_uri=${browser.identity.getRedirectURL()}`,
 				interactive: true,
 			},
-			async (redirect_url) => {
+			async (redirect_url: string) => {
 				try {
 					if (!redirect_url) return console.error('No redirect url');
 					const tokens = await convertNotionAuthCodeToToken({
@@ -62,7 +62,7 @@ export const triggerNotionAuthFlow = function (): Promise<void> {
 
 					console.log('notion access approved', tokens);
 					//store tokens locally
-					stores.notion_info.set(tokens);
+					notionInfo.set(tokens);
 
 					//set uninstall URL for internal purposes
 					// chrome.runtime.setUninstallURL(
