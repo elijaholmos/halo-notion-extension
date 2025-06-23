@@ -14,7 +14,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
+import { notionInfo, haloCookies, haloInfo, selectedClasses } from '../../../shared/stores';
 const url = 'https://halo-notion.vercel.app/api';
 
 /**
@@ -53,7 +53,8 @@ export const triggerNotionAuthFlow = function (): Promise<void> {
 				url: `https://api.notion.com/v1/oauth/authorize?client_id=c4caddd8-0c2c-459c-8b86-26dba209bca3&response_type=code&owner=user&redirect_uri=${browser.identity.getRedirectURL()}`,
 				interactive: true,
 			},
-			async (redirect_url: string) => {
+			async (redirect_url: string | undefined) => {
+				if(chrome.runtime.lastError || !redirect_url)
 				try {
 					if (!redirect_url) return console.error('No redirect url');
 					const tokens = await convertNotionAuthCodeToToken({
@@ -70,9 +71,10 @@ export const triggerNotionAuthFlow = function (): Promise<void> {
 					// 		discord_uid,
 					// 		access_token,
 					// 	}).toString()}`
-					// );
-					resolve();
+					// g('notion access approved', code);
+					
 				} catch (e) {
+					console.error(e);
 					reject(e);
 				}
 			}

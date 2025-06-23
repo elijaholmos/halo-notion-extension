@@ -1,15 +1,28 @@
 import { defineConfig } from 'wxt'
 import tailwindcss from '@tailwindcss/vite'
+import path from "path";
 
 export default defineConfig({
   manifestVersion: 3,
   srcDir: "src",
   outDir: "dist",
   modules: ["@wxt-dev/module-svelte"],
+  webExt: {
+    chromiumProfile: "/Users/williampieh/Library/Application Support/Google/Chrome/Default",
+  },
   vite: () => ({
+    resolve: {
+      alias: {
+        $lib: path.resolve("./src/lib")
+      },
+    },
     plugins: [tailwindcss() as any],
   }),
   manifest: {
+    oauth2: {
+      client_id: "c4caddd8-0c2c-459c-8b86-26dba209bca",
+      scopes: [""]
+    },
     name: "Import Halo Assignments",
     host_permissions: ["https://halo.gcu.edu/*"],
     permissions: ["cookies", "identity", "storage"],

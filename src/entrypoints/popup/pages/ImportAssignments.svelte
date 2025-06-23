@@ -14,12 +14,12 @@
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <script lang="ts">
-	import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
-	import { getInformation, getUserId, getUserOverview } from '@/shared/util/halo';
+	import { notionInfo, haloCookies, haloInfo, selectedClasses } from '../../../shared/stores';
+	import { getInformation, getUserId, getUserOverview } from '../../../shared/util/halo';
 	// import { importSingleAssignment, prepClassAssignmentImport } from './util/notion';
-	import Error from './components/Error.svelte';
-	import ProgressBar from './components/ProgressBar.svelte';
-	import LazyLoader from './LazyLoader.svelte';
+	import Error from '../components/Error.svelte';
+	import ProgressBar from '../components/ProgressBar.svelte';
+	import LazyLoader from '../components/LazyLoader.svelte';
 
 	// Svelte 5: Use $state() for local state
 	let errorMessage = $state<string | null>(null);
@@ -108,7 +108,7 @@
 	{#if errorMessage}
 		<Error error={errorMessage}>
 			<div class="text-center">
-				<p>Error! {errorMessage}</p>
+				<p class="font-semibold text-2xl">Error! {errorMessage}</p>
 			</div>
 		</Error>
 	{:else}

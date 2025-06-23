@@ -14,11 +14,11 @@
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <script lang="ts">
-	import { notionInfo, haloCookies, haloInfo, selectedClasses } from '@/shared/stores';
-	import { AUTHORIZATION_KEY, CONTEXT_KEY } from '@/shared/util/halo';
+	import { notionInfo, haloCookies, haloInfo, selectedClasses } from '../../shared/stores';
+	import { AUTHORIZATION_KEY, CONTEXT_KEY } from '../../shared/util/halo';
 	import Error from './components/Error.svelte';
-	import ImportAssignments from './ImportAssignments.svelte';
-	import Login from './Login.svelte';
+	import ImportAssignments from './pages/ImportAssignments.svelte';
+	import Login from './pages/Login.svelte';
 
 	console.log('in popup');
 	console.log('notion_info', $notionInfo);
@@ -36,14 +36,14 @@
 
 <main>
 	{#if halo_logged_in}
-		<Error error={null}>
+		<Error>
 			<p class="text-center">
 				You need to log into <a href="https://halo.gcu.edu" class="link" target="_blank">halo.gcu.edu</a> for the
-				extension to work
+				extension to work. If you are already logged in, please refresh the page.
 			</p>
 		</Error>
 	{:else if !roles?.some(({ baseRole, isActive }) => baseRole === 'Student' && isActive)}
-		<Error error={null}>
+		<Error>
 			<p>You must be an active GCU student to use this extension</p>
 		</Error>
 	{:else if !access_token}

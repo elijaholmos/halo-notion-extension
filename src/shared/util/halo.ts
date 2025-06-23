@@ -20,7 +20,7 @@ import {
 	CourseClassResponse,
 	CourseClass,
 	UserOverview,
-} from "@/shared/util/types";
+} from "../../shared/util/types";
 
 export const AUTHORIZATION_KEY = 'TE1TX0FVVEg';
 export const CONTEXT_KEY = 'TE1TX0NPTlRFWFQ';

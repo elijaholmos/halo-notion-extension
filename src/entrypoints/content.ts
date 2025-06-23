@@ -1,6 +1,7 @@
 export default defineContentScript({
-  matches: ['*://*.google.com/*'],
+  matches: ['*://*.gcu.edu/*'],
+  runAt: 'document_end',
   main() {
-    console.log('Hello content.');
+    chrome.runtime.sendMessage("HALO_LOADED");
   },
 });

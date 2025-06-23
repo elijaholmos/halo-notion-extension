@@ -14,7 +14,11 @@
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <script lang="ts">
-	import Error from './components/Error.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import logo from '../../../assets/logo.png';
+import Error from '../components/Error.svelte';
+	import { getInformation, getUserOverview, getClassInformation } from '../../../shared/util/halo';
+	import { haloCookies, selectedClasses } from '../../../shared/stores';
 
 	// Svelte 5: Use $state() for local state
 	let error = $state<string | null>(null);
@@ -33,13 +37,20 @@
 	</Error>
 {:else}
 	<div class="flex flex-col items-center">
-		<img src="../static/logo.png" alt="IHA Logo" class="w-56 m-4" />
-		<h1 class="text-xl">Welcome!</h1>
-		<span class="h-4"></span>
+		<img src={logo} alt="IHA Logo" class="w-56 m-4" />
+		<h1 class="text-xl font-semibold">Welcome!</h1>
 		<button type="button" id="login-button" class="dsl-notion-btn" title="Login with Notion" onclick={launchAuthFlow}>
 			<span class="dsl-notion-btn-icon"></span>
 			<span>Login with Notion</span>
 		</button>
+		<div>
+			<ul>
+				{#each Object.keys($selectedClasses) as code}
+					<li>{code}</li>
+				{/each}
+			</ul>
+		</div>
+
 		<a href="https://elijaho.notion.site/Import-Halo-Assignments-bb29114c25294a14a2fc24247fbabe53" target="_blank">
 			<button class="btn btn-md btn-primary gap-2">
 				<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

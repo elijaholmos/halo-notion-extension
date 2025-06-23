@@ -19,7 +19,7 @@
     lazyLoad is fulfilled (or rejected) 
 -->
 <script lang="ts">
-	import Error from './components/Error.svelte';
+	import Error from './Error.svelte';
 
 	let { lazyLoad, children }: { lazyLoad: () => Promise<void>, children: any } = $props();
 </script>
@@ -35,7 +35,7 @@
 {:catch error}
 	<Error error={error.message}>
 		<div class="text-center">
-			<p>Error! {error.message}</p>
+			<p class="font-semibold text-2xl">Error! {error.message}</p>
 		</div>
 	</Error>
 {/await}
